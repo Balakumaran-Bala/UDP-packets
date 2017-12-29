@@ -9,16 +9,21 @@ MAC_ADDRESS = "10.0.0.210"
 MAC_PORT = 7891
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#clientSocket_receive = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	
+#clientSocket_receive.bind((MAC_PORT, MAC_PORT))
 
-#clientSocket.bind((MAC_ADDRESS, MAC_PORT))
-
-def recv():
+def receive():
 	while True:
 		data = clientSocket.recv(1024)
-		if not data: sys.exit(0)
-		print data
+
+		print "\n" + data
+
+t = Thread(target=receive)
+t.start()
 
 while True:
 	Message = raw_input("Message: ")
 	clientSocket.sendto(Message, (UDP_IP_ADDRESS, UDP_PORT_NO))
-	Thread(target=recv).start()
+	
+
